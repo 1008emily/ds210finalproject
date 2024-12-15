@@ -132,7 +132,6 @@ mod tests {
         assert!(result.is_ok(), "Expected function to run successfully");
         assert!(Path::new(output_file).exists(), "Expected output file to exist");
 
-        // Cleanup test file
         std::fs::remove_file(output_file).unwrap();
     }
 }
