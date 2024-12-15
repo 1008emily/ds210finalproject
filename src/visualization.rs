@@ -17,7 +17,6 @@ pub fn plot_correlation_graph(
     let y_min = *y.iter().min_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
     let y_max = *y.iter().max_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
 
-    // Configure the chart
     let mut chart = ChartBuilder::on(&root)
         .caption("Correlation with Regression Line", ("sans-serif", 30))
         .margin(20)
@@ -30,18 +29,15 @@ pub fn plot_correlation_graph(
         .y_desc("Average PSQI Score")
         .draw()?;
 
-    // Draw scatter plot points
     chart.draw_series(
         x.iter()
             .zip(y.iter())
             .map(|(xi, yi)| Circle::new((*xi, *yi), 5, BLUE.filled())),
     )?;
 
-    // Calculate the regression line points
     let y_start = slope * x_min + intercept;
     let y_end = slope * x_max + intercept;
 
-    // Draw regression line
     chart.draw_series(LineSeries::new(
         vec![(x_min, y_start), (x_max, y_end)],
         &RED,
@@ -49,7 +45,6 @@ pub fn plot_correlation_graph(
     .label("Regression Line")
     .legend(|(x, y)| PathElement::new(vec![(x - 5, y), (x + 5, y)], &RED));
 
-    // Add legend
     chart.configure_series_labels()
         .border_style(&BLACK)
         .background_style(&WHITE.mix(0.8))
