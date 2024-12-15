@@ -1,7 +1,5 @@
 use plotters::prelude::*;
 
-use plotters::prelude::*;
-
 pub fn plot_correlation_graph(
     x: &Vec<f64>,
     y: &Vec<f64>,
