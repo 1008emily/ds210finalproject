@@ -116,3 +116,23 @@ pub fn plot_heatmap(
     root.present()?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::Path;
+
+    #[test]
+    fn test_plot_correlation_graph() {
+        let x = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+        let y = vec![2.0, 4.0, 6.0, 8.0, 10.0];
+        let output_file = "test_correlation_graph.png";
+
+        let result = plot_correlation_graph(&x, &y, 2.0, 0.0, output_file);
+        assert!(result.is_ok(), "Expected function to run successfully");
+        assert!(Path::new(output_file).exists(), "Expected output file to exist");
+
+        // Cleanup test file
+        std::fs::remove_file(output_file).unwrap();
+    }
+}

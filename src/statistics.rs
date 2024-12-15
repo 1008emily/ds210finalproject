@@ -28,3 +28,33 @@ pub fn linear_regression(x: &Vec<f64>, y: &Vec<f64>) -> Result<(f64, f64), &'sta
 
     Ok((slope, intercept))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_pearson_correlation_valid_input() {
+        let x = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+        let y = vec![2.0, 4.0, 6.0, 8.0, 10.0];
+        let result = pearson_correlation(&x, &y).unwrap();
+        assert!((result - 1.0).abs() < 1e-6, "Expected correlation close to 1.0");
+    }
+
+    #[test]
+    fn test_linear_regression_valid_input() {
+        let x = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+        let y = vec![2.0, 4.0, 6.0, 8.0, 10.0];
+        let (slope, intercept) = linear_regression(&x, &y).unwrap();
+        assert!((slope - 2.0).abs() < 1e-6, "Expected slope of 2.0");
+        assert!((intercept - 0.0).abs() < 1e-6, "Expected intercept of 0.0");
+    }
+
+    #[test]
+    fn test_empty_input() {
+        let x = vec![];
+        let y = vec![];
+        let result = pearson_correlation(&x, &y);
+        assert!(result.is_err(), "Expected an error for empty input");
+    }
+}

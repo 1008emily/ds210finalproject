@@ -45,3 +45,21 @@ impl Dataset {
             .collect()
     }    
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_compute_averages() {
+        let mut data = Dataset {
+            data: std::collections::HashMap::new(),
+        };
+
+        data.data.insert(1, vec![(10.0, 2.0), (20.0, 4.0)]);
+        let averages = data.compute_averages();
+        assert_eq!(averages.len(), 1);
+        assert!((averages[0].pss - 15.0).abs() < 1e-6, "Expected average PSS of 15.0");
+        assert!((averages[0].psqi - 3.0).abs() < 1e-6, "Expected average PSQI of 3.0");
+    }
+}
